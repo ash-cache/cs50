@@ -1,1 +1,1 @@
-![Original Image](https://github.com/akcode2/cs50/edit/master/Memory/images/flower.bmp?raw=true)
+![Original Image](https://raw.githubusercontent.com/akcode2/cs50/master/Memory/Images/flowersmall.bmp?token=AJRQTBN33YH3QDAQCXNQ37DA2IEJW)
