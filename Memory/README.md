@@ -9,7 +9,7 @@ In this assignment, I applied filters to bitmap images (à la Instagram) to expl
 I used a box blur filter to create a softening effect. Box blur works by setting each pixel's value to the average of its neighboring pixels (in a 3x3 grid).
 
 ## Reflection
-I iterated over the image row by row and swapped the pixels on the left half and right half.
+Since a bitmap image is just an array of pixels, I iterated over the image row by row and swapped the pixels on the left half and right half.
 
 ## Edge detection
 I used the Sobel edge detection algorithm. 
