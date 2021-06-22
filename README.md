@@ -8,4 +8,7 @@ cs50 psets
 
 * **tideman.c** - Implements an election by the Tideman algorithm that produces a condorcet winner - a candidate who best wins against every other candidate.
 
+### Pset 4: Memory
+* Filter - In this assignment, I applied filters to bitmap images (à la Instagram) to explore how C handles memory. I applied grayscale, sepia, and blur filters. I also reflected the image and applied an edge detection algorithm to it.
+
 
