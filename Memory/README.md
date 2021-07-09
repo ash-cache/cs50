@@ -1,3 +1,7 @@
+#### Table of Contents
+* [Filter (BMP image transformation)](https://github.com/akcode2/cs50/tree/master/Memory#Filter)
+
+* [Recover (JPEG image forensics)](https://github.com/akcode2/cs50/tree/master/Memory#Recover)
 
 # Filter
 In this assignment, I applied filters to bitmap images (à la Instagram) to explore how C handles memory. I applied grayscale, sepia, and blur filters. I also reflected the image and applied an edge detection algorithm to it.
@@ -25,4 +29,15 @@ By multiplying the neighboring 3x3 pixels by the respective kernel, we can compu
 The aggregate of this highlights the edges.
 
 # Recover
+The task in this assignment was to recover JPEGs that were deleted from an SD card. I was given a raw memory dump and I wrote a program that read the blocks of memory block-by-block to identify and restore the files.
+
+* I learned that JPEG files contain a header with a "signature" and I learned a bit of bitwise arithmetic to identify this signature. 
+
+* I learned that FAT16 and FAT32 file systems read and write memory in 512 byte blocks (up to a point) and that because of this there is "slack space" when files are stored in memory. It would be interesting to explore the digital forensics implications of that. 
+
+* I learned about file pointers and how to use them with stdio functions.
+
+* I learned not to use `while(!feof)` to check that I haven't reached the end of a file. This is because if we're at `EOF` (last byte of the file), `feof` will return false, the loop will execute, and then on the *next* iteration, `feof` will return true. As a result, the code executes one more time than intended. Instead a better way is to use `while(fread() == nmemb)`. `fread` will return the number of items read and will return a short item count or zero if it reaches `EOF`. This way, we're reading and checking for `EOF` check in the same iteration and will not read past `EOF`.
+
+
 
