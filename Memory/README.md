@@ -1,3 +1,5 @@
+
+# Filter
 In this assignment, I applied filters to bitmap images (à la Instagram) to explore how C handles memory. I applied grayscale, sepia, and blur filters. I also reflected the image and applied an edge detection algorithm to it.
 
 ![](https://github.com/akcode2/cs50/blob/master/Memory/Images/filteredimages.png)
@@ -21,3 +23,6 @@ The Sobel operator consists of two kernels, one for detecting edges in the x dir
 By multiplying the neighboring 3x3 pixels by the respective kernel, we can compute a weighted sum of changes in each direction.
 
 The aggregate of this highlights the edges.
+
+# Recover
+
