@@ -1,7 +1,7 @@
 #include "helpers.h"
 #include <math.h>
 #include <stdio.h>
-#include <stdbool.h> // Needed to have the 'bool' identifier
+#include <stdbool.h> // Needed to have the 'bool' identifier 
 
 // Convert image to grayscale
 // image is a 2-dimensional array of type RGBTRIPLE (24 bit pixels)
