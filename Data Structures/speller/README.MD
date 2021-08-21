@@ -9,3 +9,8 @@ When a regular function is called within `main()`, the variables from `main()` a
 
 `getc()` can be used as a macro so it has improved performance over `fgetc()` or `fgets()`. Unfortunately since we can't know the dictionary being used until runtime, this doesn't do us any good.
 
+## fgetc() vs fgets()
+`fgetc()` reads the file stream byte by byte. `fgets()` reads a specified number of bytes into a buffer until a new line or EOF is reached. The problem is that `fgets()` includes the new line in the buffer and then appends a null terminator (`\0`). We then have to change the new line character to a null terminator.
+
+But even with performing this correction, fgets() is faster than fgetc() according to my research. This source says that `fgets()` is 5x faster than `fgetc()`.
+
