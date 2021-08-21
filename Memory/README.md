@@ -37,7 +37,8 @@ The task in this assignment was to recover JPEGs that were deleted from an SD ca
 
 * I learned about file pointers and how to use them with stdio functions.
 
-* I learned not to use `while(!feof)` to check that I haven't reached the end of a file. This is because if we're at `EOF` (last byte of the file), `feof` will return false, the loop will execute, and then on the *next* iteration, `feof` will return true. As a result, the code executes one more time than intended. Instead a better way is to use `while(fread() == nmemb)`. `fread` will return the number of items read and will return a short item count or zero if it reaches `EOF`. This way, we're reading and checking for `EOF` check in the same iteration and will not read past `EOF`.
+* I learned not to use `while(!feof)` to check that I haven't reached the end of a file. This is because the EOF indicator is not set until a function attempts to read past the end of the file. So if we've already read the last byte, then `while(!feof)` returns false, `fread()` attempts to read and sets EOF, then any code left in the loop will still execute even though this is not intended. 
+ Instead a better way is to use `while(fread() == nmemb)`. `fread` will return the number of items read and will return a short item count or zero if it reaches `EOF`. This way, we're reading and checking for `EOF` check in the same iteration and will not read past `EOF`.
 
 (edited to add)
 According to [Ruslan Spivak](https://ruslanspivak.com/eofnotchar/), EOF is not a character at the end of the file. There is no EOF character at the end of the file. 
