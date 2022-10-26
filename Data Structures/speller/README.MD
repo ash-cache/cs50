@@ -32,7 +32,9 @@ The goal of a hash table is to enable fast lookup. If our hash table is sufficie
 
 A hash function can produce numbers that are larger than the length of the hash table. To make the numbers fit within the hash table, we can compute the modulo of the number with the table length which will produce integers between (0 and (length - 1)).
 
-A problem emerges when dividing by a non-prime number. Integers that are a multiple of one of the factors of the non-prime number will yield the same remainder after modulo with the table length. Let's clarify that: Suppose the table length is 14 which has two factors, 7 and 2. All numbers that are a multiple of 7 but not of 14 (e.g. 21, 35, 49) will have the same result after modulo: (21 % 14) == (35 % 14) == (49 % 14) = 7. This results in clusters of data at index 7 which will slow down the hash function.
+A problem emerges when dividing by a non-prime number. Integers that are a multiple of one of the factors of the non-prime number will yield the same remainder after modulo with the table length. 
+
+Let's clarify that: Suppose the table length is 14 which has two factors, 7 and 2. All numbers that are a multiple of 7 but not of 14 (e.g. 21, 35, 49) will have the same result after modulo: (21 % 14) == (35 % 14) == (49 % 14) = 7. This results in clusters of data at index 7 which will slow down lookups in the hash table.
 
 We can minimize this type of collision by using a prime number length for the hash table. Prime numbers have only 1 and the number itself as factors.
 
