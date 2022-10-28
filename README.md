@@ -1,5 +1,5 @@
-# cs50
-cs50 psets
+# CS50
+CS50 psets
 
 ### Pset 3: Algorithms - Using voting in an election as a way to study algorithms in C, including sorting algorithms and algorithmic runtime.
 * **plurality.c** - Implements an election that produces a winner by plurality vote.
