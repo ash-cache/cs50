@@ -1,12 +1,12 @@
 # mario.c
 
-This was the first program I wrote in C and gave some basic practice with loops and conditionals.
+This was the first program I wrote in C to practice loops. It prompts the user for a height and prints two half pyramids.
 
 # credit.c
 
-This program increased my familiarity with C because I needed to learn and use multiple concepts: 
+This was the second program I wrote and got me used to more concepts like limitations of C data types and logical problem solving.
 
-I wrote an implementation of the [Luhn Algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) which is a checksum to determine whether a given string of digits comprises a credit card number.
+I wrote an implementation of the [Luhn Algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) which is a checksum to determine whether a given string of digits comprises a valid Visa, Mastercard, or American Express credit card number.
 
 These are the steps to perform the checksum (source: [CS50x](https://cs50.harvard.edu/x/2022/psets/1/credit/)):
 1. Multiply every other digit by 2, starting with the number’s second-to-last digit, and then add those products’ digits together.
