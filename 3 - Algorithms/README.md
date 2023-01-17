@@ -12,4 +12,4 @@ This type of election produces a graph. An arrow (edge) is drawn from a candidat
 
 It's possible that a graph can be produced with no source - each candidate has an arrow pointing towards and also away from them (a cycle). To prevent this, each head-to-head race is ranked according to the strength of victory. The arrows (edges) are "locked in" in order of the strength of victory. If an edge would produce a cycle, it is not locked in.
 
-The graph is represented as an adjacency matrix.
+The graph is represented as an [adjacency matrix](https://en.wikipedia.org/wiki/Adjacency_matrix).
