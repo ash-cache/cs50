@@ -1,89 +1,153 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+/* Digital cameras often use FAT file systems. When images
+   are deleted, the actual bytes still remain.
 
-/* Cluster size of FAT16 (up to 32 MiB) and FAT32 (up to 64 MiB) is 512B
-   Assumes the memory card was zeroed out and that the JPEGs are contiguous in memory
-   Zeroed out memory means that any block either contains JPEG data or zeroes in slack space. Zeroes won't change the image.
+   Given some binary "forensic image" of an SD card,
+   recover the deleted files.
+
+   We read block by block into a memory buffer that we
+   allocate, and look for a JPEG file signature.
+
+   When we find one, we output the data to a new JPEG
+   file until we find a new JPEG signature.
+
+   There may be slackspace (partial block usage), but if the SD card is new
+   then it would be zeroed out and this won't affect the image.
+
+   Accepts an input file name as a command line argument.
 */
 
-// Function prototypes
-bool JPEGsig(unsigned char* buffer);
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+typedef uint8_t BYTE;
+
+const int BLOCK_SIZE = 512;
+
+bool JPEGSIG(BYTE *buffer);
 
 int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        printf("Usage: ./recover <file.raw>\n");
+        printf("Usage: ./recover IMAGE\n");
         return 1;
     }
 
-    FILE *file = fopen(argv[1], "r");                                           // *file is a file pointer (which is required for stdio functions)
+    // Create a pointer to remember filename
+    char *infile = argv[1];
 
-    if (!file)                                                                  // In other words, if fopen, which is pointed to by *file, returns NULL (due to error)
+    // In order to use I/O functions, we need a file pointer. fopen() provides the file pointer.
+    FILE *inptr = fopen(infile, "r");
+
+    // Ensure the file pointer is not a null pointer
+    if (inptr == NULL)
     {
-        printf("The file could not be read.");
+        printf("File could not be opened for reading.\n");
         return 1;
     }
 
-    int count = 0;
-    char filename[8];
-    FILE *newJPEG = NULL;                                                       // In order to be able to close an open JPEG later, we have to declare the pointer here.
-    unsigned char *buffer = malloc(sizeof(unsigned char) * 512);                // Allocate 512 bytes of memory on the heap that we'll use a buffer into which we'll read the file.
+    // A file that has been opened using fopen() can be read using fread()
+    // The memory card is formatted as FAT which has a block size of 512 B
 
-    while (fread(buffer, sizeof(unsigned char), 512, file) == 512)              // fread returns the number of bytes read. If end of file is reached, it returns a short item count or zero.
+
+    // Dynamically allocate 512 B from heap as a buffer
+    BYTE *buffer = malloc(sizeof(BYTE) * BLOCK_SIZE);
+
+    // Allocate buffer for the output file name
+    char *outfile = malloc(sizeof(char) * 8);
+
+    /*
+       fread returns the number of bytes read and zero otherwise.
+
+       The size of the data to be read is 1 byte.
+       BLOCK_SIZE is how many of those data elements to read at once.
+
+       Read (1 byte * BLOCK_SIZE) at a time from inptr into buffer (or rather, where buffer points).
+
+       If fread returns zero then there are no more blocks to read and the loop ends.
+    */
+    // Count of the number of images found
+    int n = 0;
+
+    FILE *outptr = NULL;
+    while (fread(buffer, 1, BLOCK_SIZE, inptr) == BLOCK_SIZE)
     {
-        //fread(buffer, sizeof(unsigned char), 512, file);
-
-        if (JPEGsig(buffer))
+        // If a JPEG signature is encountered
+        if (JPEGSIG(buffer) == true)
         {
-            sprintf(filename, "%03i.jpg", count);                               // sprintf() prints to a string. %3i means a minimum width of 3, and the 0 in front means to zero-fill the number.
-            printf("%s\n", filename);
-
-            if (count == 0)
+            // If a file is already open, close it
+            if (outptr == NULL)
             {
-                newJPEG = fopen(filename, "w");
-                fwrite(buffer, sizeof(unsigned char), 512, newJPEG);
+                // No file open, do nothing
+            }
+            else if (outptr != NULL)
+            {
+                 // Close the previous file
+                 fclose(outptr);
             }
 
-            else
+            // Print a formatted string to the buffer we allocated earlier
+            sprintf(outfile, "%03d.jpg", n);
+
+            // Open a file for writing and create a file pointer
+            outptr = fopen(outfile, "w");
+            if (outptr == NULL)
             {
-                fclose(newJPEG);
-                newJPEG = fopen(filename, "w");
-                fwrite(buffer, sizeof(unsigned char), 512, newJPEG);
+                fclose(outptr);
+                printf("Could not create %s\n", outfile);
+                return 1;
             }
-            count++;
+            // Increment n since a file has been opened for writing
+            n++;
+
+            // Write this block to the file
+            fwrite(buffer, 1, BLOCK_SIZE, outptr);
         }
 
         else
         {
-            if (count == 0)
+            // If this is the first image and a JPEG signature hasn't been found
+            // continue to the next block of data without doing anything
+            if (n == 0)
             {
                 continue;
             }
-            else
-            {
-                fwrite(buffer, sizeof(unsigned char), 512, newJPEG);            // If this is not the first time fwrite() is called on a file, it will append to the file instead of overwriting by default.
-            }
+            // Write data from buffer to outptr
+            // An open file has a "file position" attribute that keeps track of where the next
+            // byte should be written.
+            fwrite(buffer, 1, BLOCK_SIZE, outptr);
         }
-
     }
-    free(buffer);                                                               // Free buffer from heap memory.
+
+    // After the while loop exits, the last file opened still needs to be closed
+    fclose(outptr);
+    // Close the raw file
+    fclose(inptr);
+
+    free(buffer);
+    free(outfile);
+
 }
 
-
-
-// * I learned bitwise arithmetic
-// Check for JPEG signature
-// If the file is a JPEG, buffer[3] should be between 0xe0 and 0xef (1110 0000 through 1110 1111).
-// We can take the bitwise AND of buffer[3] and 0xe0 (1110 0000) to check for this condition.
-// We could also do the condition (buffer[3] & 0xf0 == 0xe0) and get the same result.
-bool JPEGsig(unsigned char *buffer)
+bool JPEGSIG(BYTE *buffer)
 {
-    if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && ((buffer[3] & 0xe0) == 0xe0))
-    {
-        return true;                                                            // If the first four bytes of the buffer block match the JPEG signature, it might be a JPEG. Return 'true'.
-    }
+    // Just as the name of an array is a pointer to its first element,
+    // we can treat a pointer as the address of the first element in an array.
+    // The first three bytes of a JPEG image are 0xff 0xd8 0xff
+    // and the fourth byte's first four bits are 1110.
 
-    return false;                                                               // Otherwise return 'false'.
+    // 1110 0000 XOR'ed with any number beginning with 1110, for example,
+    // 1110 0000 XOR 1110 0001, or 1110 0000 XOR 1110 1111, will always be at most
+    // 0000 1111, or 15. 1110 0000 in decimal is 224.
+
+    if (buffer[0] == 255 && buffer[1] == 216 && buffer[2] == 255 && ((buffer[3] ^ 224) < 16))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
