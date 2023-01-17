@@ -9,7 +9,7 @@ In this assignment, I applied filters to bitmap images (à la Instagram) to expl
 ![](https://github.com/akcode2/cs50/blob/master/Memory/Images/filteredimages.png)
 
 ### Grayscale / Sepia
-24-bit bitmap images have 8-bit RGB channels that can range from 0 to 255. If the Red, Green, and Blue channel values are equal, then the result is a shade of gray. The image is converted to grayscale by setting the RGB values to the average of the channels. Sepia is accomplished by computing new RGB values based on the original.
+24-bit bitmap images represent each pixel with 24 bits - 8 bits each for R, G, and B. The values can range between 0 and 255. (Actually, BMP represents these triples as BGR).If the Red, Green, and Blue channel values are equal, then the result is a shade of gray. I converted the image to grayscale by setting the RGB values to the average of those channels. Sepia is accomplished by computing new RGB values based on the original.
 
 ### Blur
 I used a box blur filter to create a softening effect. Box blur works by setting each pixel's value to the average of its neighboring pixels (in a 3x3 grid).
