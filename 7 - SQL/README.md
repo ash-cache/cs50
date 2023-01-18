@@ -1,3 +1,4 @@
+# movies
 This directory contains a `movies.db` SQLite database file that was adapted from IMDb [(link)](https://cdn.cs50.net/2021/fall/psets/7/movies.zip). #.sql are SQL queries to answer some questions. 
 ```
 movies/ $ sqlite3 movies.db
@@ -46,3 +47,6 @@ Here are some of the questions:
 
 13. List the names of all people who starred in a movie in which Kevin Bacon also starred.
   There may be multiple people named Kevin Bacon in the database. Be sure to only select the Kevin Bacon born in 1958.
+  
+# Fiftyville
+This was a fun who-dun-it where the CS50 duck was stolen and I used SQL queries on a database of evidence to find the culprit.
