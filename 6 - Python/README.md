@@ -17,8 +17,8 @@ This program looks at 8 STRs and uses Python utilities to compare them with DNA 
 # sentimental-hello
 A basic 'hello, world'-type program that gets a name and returns a greeting.
 # sentimental-mario
-A Python version of a program I [previously wrote with C](https://github.com/akcode2/cs50/tree/master/1%20-%20C#marioc). Prints two half pyramids to the terminal.
+A Python version of a program I [previously wrote with C](https://github.com/ash-cache/cs50/tree/master/1%20-%20C#marioc). Prints two half pyramids to the terminal.
 # sentimental-credit
-A Python version of a program [I previously wrote with C](https://github.com/akcode2/cs50/tree/master/1%20-%20C#creditc). Using methods like str.startswith() and string slicing techniques, I was able to do this with fewer lines of code.
+A Python version of a program [I previously wrote with C](https://github.com/ash-cache/cs50/tree/master/1%20-%20C#creditc). Using Python string methods, I was able to do the same thing with fewer lines of code.
 # sentimental-readability
-A Python version of a program [I previously wrote with C](https://github.com/akcode2/cs50/blob/master/2%20-%20Arrays/README.md#readability). Computes the reading grade level of some text and does it more succinctly.
+A Python version of a program [I previously wrote with C]([https://github.com/akcode2/cs50/blob/master/2%20-%20Arrays/README.md#readability](https://github.com/ash-cache/cs50/tree/master/2%20-%20Arrays#reading-level)). Computes the reading grade level of some text and does it more succinctly.
