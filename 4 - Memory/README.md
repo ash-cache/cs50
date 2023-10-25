@@ -6,7 +6,8 @@
 # Filter
 In this assignment, I applied filters to bitmap images (à la Instagram) to explore how C handles memory. I applied grayscale, sepia, and blur filters. I also reflected the image and applied an edge detection algorithm to it.
 
-![](https://github.com/ash-cache/cs50/blob/master/Memory/Images/filteredimages.png)
+![](https://github.com/ash-cache/cs50/blob/ec31ddae50adfc455063ba69921cda66627b54c8/4%20-%20Memory/Images/filteredimages.png)
+
 
 ### Grayscale / Sepia
 24-bit bitmap images represent each pixel with 24 bits - 8 bits each for R, G, and B. The values can range between 0 and 255. (Actually, BMP represents these triples as BGR).If the Red, Green, and Blue channel values are equal, then the result is a shade of gray. I converted the image to grayscale by setting the RGB values to the average of those channels. Sepia is accomplished by computing new RGB values based on the original.
