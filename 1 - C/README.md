@@ -1,10 +1,22 @@
-# mario.c
-
+# Usage
+## mario.c
+```
+$ ./mario
+Height: 4
+   #  #
+  ##  ##
+ ###  ###
+####  ####
+```
 This was the first program I wrote in C to practice loops. It prompts the user for a height and prints two half pyramids.
 
 # credit.c
-
-This was the second program I wrote and got me used to more concepts like limitations of C data types and logical problem solving.
+```
+$ ./credit
+Number: 4003600000000014
+VISA
+```
+This was the second program I wrote in C and helped me get used to more concepts like the limitations of C data types and problem solving with code.
 
 I wrote an implementation of the [Luhn Algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) which is a checksum to determine whether a given string of digits comprises a valid Visa, Mastercard, or American Express credit card number.
 
