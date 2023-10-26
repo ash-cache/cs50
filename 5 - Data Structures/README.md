@@ -1,4 +1,4 @@
-# A very fast spellchecker
+# Speller: A very fast spellchecker
 
 ## The problem with arrays
 Why can't we just use an array? We could somehow transform a word into an array index and look it up.
