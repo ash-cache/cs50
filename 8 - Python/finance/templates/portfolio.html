@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+
+{% block main %}
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Name</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Current price</th>
+                <th scope="col">TOTAL</th>
+                <th scope="col" style="width:  8.33%">Buy more</th>
+                <th scope="col" style="width:  8.33%">Sell stock</th>
+            </tr>
+        </thead>
+
+        {% for row in stocks %}
+        <tr>
+            <td> {{ row["symbol"] }} </td>
+            <td> {{ row["name"] }} </td>
+            <td> {{ row["shares"] }} </td>
+            <td> {{ row["price"] }} </td>
+            <td> {{ row["total"] }} </td>
+            <td>
+                <div class="row">
+                    <div class="col-auto">
+                        <form action="/buy" method="POST">
+                            <input type="hidden" name="symbol" value="{{ row["symbol"] }}">
+                            <div class="mb-3">
+                                <input class="w-50" type="number" id="quantity" name="quantity">
+                            </div>
+                                <input class="w-50" type="submit" value="Buy">
+                        </form>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="row">
+                    <div class="col-auto" >
+                        <form action="/sell" method="POST">
+                            <input type="hidden" name="symbol" value="{{ row["symbol"] }}">
+                            <div class="mb-3">
+                                <input class="w-50" type="number" id="shares" name="shares" max="{{ row["shares"] }}">
+                            </div>
+                                <input class="w-50" type="submit" value="Sell">
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>&nbsp</td>
+            <td>&nbsp</td>
+            <td>&nbsp</td>
+            <td><strong>Cash</strong></td>
+            <td>{{ cash }}</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>&nbsp</td>
+            <td>&nbsp</td>
+            <td><strong>GRAND TOTAL</strong></td>
+            <td>{{ grand_total }}</td>
+        </tr>
+    </table>
+{% endblock %}
