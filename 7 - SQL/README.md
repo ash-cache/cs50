@@ -1,5 +1,5 @@
 # movies
-This directory contains a `movies.db` SQLite database file that was adapted from IMDb [(link)](https://cdn.cs50.net/2021/fall/psets/7/movies.zip). #.sql are SQL queries to answer some questions. 
+This directory contains a `movies.db` SQLite database file that was adapted from IMDb [(link)](https://cdn.cs50.net/2021/fall/psets/7/movies.zip). The files named `#.sql` are SQL queries to answer some questions. 
 ```
 movies/ $ sqlite3 movies.db
 SQLite version 3.39.3 2022-09-05 11:02:23
